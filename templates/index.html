@@ -10,7 +10,7 @@
         <h1>Xuan's Chatbot</h1>
         <div class="search-toggle">
             <label>
-                <input type="checkbox" id="search-toggle" checked> Enable Search
+                <input type="checkbox" id="search-toggle" checked>🔎Enable Search検索を有効にする
             </label>
         </div>
         <div class="chat-history" id="chat-box">
@@ -18,15 +18,15 @@
             <div class="message {{ 'user' if msg[0] == 'user' else 'bot' }}" data-raw="{{ msg[1] | e }}">
                 <div class="message-content">{{ msg[1] }}</div>
                 {% if msg[0] == 'bot' %}
-                <button class="copy-btn">Copy</button>
+                <button class="copy-btn">㊢Copyコピー</button>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
         
         <form id="chat-form">
-            <input type="text" name="message" placeholder="Type your message..." required>
-            <button type="submit">Send</button>
+            <input type="text" name="message" placeholder="输入您的消息輸入您的訊息Type your messageメッセージを入力してくださいGeben Sie Ihre Nachricht ein..." required>
+            <button type="submit">🉑Send送信</button>
         </form>
     </div>
 

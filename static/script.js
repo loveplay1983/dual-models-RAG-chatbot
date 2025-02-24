@@ -29,8 +29,8 @@ document.addEventListener('click', (e) => {
         const messageDiv = e.target.closest('.message');
         const rawMarkdown = messageDiv.getAttribute('data-raw');
         navigator.clipboard.writeText(rawMarkdown)
-            .then(() => alert('Markdown copied to clipboard!'))
-            .catch(err => console.error('Copy failed:', err));
+            .then(() => alert('Markdown copied to clipboardマークダウンをクリップボードにコピーしました!'))
+            .catch(err => console.error('Copy failedコピーに失敗しました:', err));
     }
 });
 
@@ -91,9 +91,9 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
         }
         botMessageDiv.setAttribute('data-raw', fullMarkdown); // Set raw Markdown after streaming
     } catch (error) {
-        console.error('Chat error:', error);
+        console.error('Chat errorチャットエラー:', error);
         botMessageDiv.className = 'message error';
-        contentDiv.textContent = `Error: ${error.message}`;
+        contentDiv.textContent = `Errorエラー: ${error.message}`;
     }
 });
 
