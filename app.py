@@ -86,7 +86,16 @@ def index():
     """Render chat interface with history."""
     db = get_db()
     history = db.execute(
-        'SELECT role, content FROM messages ORDER BY timestamp ASC LIMIT 100'
+        '''
+        SELECT role, content 
+        FROM (
+            SELECT role, content, timestamp 
+            FROM messages 
+            ORDER BY timestamp DESC 
+            LIMIT 10
+        ) AS recent 
+        ORDER BY timestamp ASC
+        '''
     ).fetchall()
     return render_template('index.html', history=history)
 

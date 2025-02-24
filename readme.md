@@ -103,6 +103,7 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 ### 3. Todo
 - Fix the copy function to make it available in chat history, too. 
 - Remove the mixed language display, which just for fun right now. 
-- Chat history should only display the recent discussions. 
+- <s>Chat history should only display the recent discussions. </s>
 - Maybe we cna show the r1 reasoning typing aswell, which is useful for better understanding. 
+
 

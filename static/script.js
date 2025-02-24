@@ -11,7 +11,7 @@ const converter = new showdown.Converter({
     sanitize: true
 });
 
-// Render Markdown for existing messages on page load
+// Render Markdown for existing messages on page load and scroll to bottom
 document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
     const messages = chatBox.querySelectorAll('.message.bot');
@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentDiv = message.querySelector('.message-content');
         contentDiv.innerHTML = converter.makeHtml(rawMarkdown);
     });
+    // Scroll to the bottom after rendering history
+    chatBox.scrollTop = chatBox.scrollHeight;
 });
 
 
