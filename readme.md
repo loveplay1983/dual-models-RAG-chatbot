@@ -100,5 +100,9 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
   - **Relation:** Mixtral is a unique branch, blending dense model ancestry (Mistral 7B) with MoE advancements.
 
 
-
+### 3. Todo
+- Fix the copy function to make it available in chat history, too. 
+- Remove the mixed language display, which just for fun right now. 
+- Chat history should only display the recent discussions. 
+- Maybe we cna show the r1 reasoning typing aswell, which is useful for better understanding. 
 
