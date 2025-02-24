@@ -10,7 +10,7 @@ graph TD
     B -->|Reasoning| C[Reasoning Output]
     A --> D[DuckDuckGo Search]
     D -->|Context Embedding| E[Context]
-    C --> F[Combine Reasoning + Context]
+    C --> F[Reasoning + Context]
     E --> F
     F -->|Input for Generation| G[Mistral:7B]
     G -->|Final Description| H[Final Output]

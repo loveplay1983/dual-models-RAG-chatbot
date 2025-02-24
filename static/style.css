@@ -1,0 +1,206 @@
+body {
+    background: #e5e5e5;
+    font-family: Arial, sans-serif;
+}
+
+.chat-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.chat-history {
+    height: 70vh;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.message {
+    margin: 15px 0;
+    padding: 12px 18px;
+    border-radius: 20px;
+    max-width: 75%;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.message.user {
+    background: #007bff;
+    color: white;
+    margin-left: auto;
+}
+
+.message.bot {
+    background: #e9ecef;
+    color: black;
+    margin-right: auto;
+}
+
+.message.error {
+    background: #dc3545;
+    color: white;
+}
+
+#chat-form {
+    display: flex;
+    gap: 15px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 25px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+
+.message.bot {
+    position: relative;
+    min-height: 20px;
+}
+
+.loading-cursor::after {
+    content: '▋';
+    animation: blink 1s step-end infinite;
+    color: #666;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Adding the following for markdown styling */
+.message.bot h1, .message.bot h2, .message.bot h3 {
+    margin: 1em 0 0.5em;
+    font-weight: bold;
+}
+
+.message.bot h1 { font-size: 1.6em; }
+.message.bot h2 { font-size: 1.4em; }
+.message.bot h3 { font-size: 1.2em; }
+
+.message.bot ul, .message.bot ol {
+    padding-left: 2em;
+    margin: 0.5em 0;
+}
+
+.message.bot li {
+    margin: 0.25em 0;
+}
+
+.message.bot code {
+    background: #f4f4f4;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: Monaco, Consolas, "Courier New", monospace;
+}
+
+.message.bot pre {
+    background: #f8f8f8;
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.message.bot pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.message.bot blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1em 0;
+    padding-left: 1em;
+    color: #666;
+}
+
+.message.bot table {
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.message.bot th, .message.bot td {
+    border: 1px solid #ddd;
+    padding: 0.5em 1em;
+}
+
+.message.bot th {
+    background-color: #f8f8f8;
+}
+
+
+.message.bot h1,
+.message.bot h2,
+.message.bot h3,
+.message.bot p,
+.message.bot ul,
+.message.bot ol,
+.message.bot pre {
+    background: inherit !important;
+}
+
+/* Fix code block alignment */
+.message.bot pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+
+.copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 2px 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.message.bot:hover .copy-btn {
+    opacity: 1;
+}
+
+
+.search-toggle {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.search-toggle label {
+    color: #555;
+    font-size: 16px;
+}
