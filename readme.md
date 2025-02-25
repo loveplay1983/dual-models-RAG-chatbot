@@ -1,5 +1,4 @@
-# Simple chatbot based on ollama, flask, sqlite, and vector embedding
-
+# Simple chatbot based on Ollama, Flask, Sqlite, and Vector Embedding Model
 
 
 ### 1. Chatbot structure
@@ -18,14 +17,14 @@ graph TD
 
 
 
-### 2. Relation between Mistral and other LLMs
+### 2. Why do you need Mistral?
 
 ###### a. Background
-Mistral AI is a French startup founded in 2023 by former researchers from Meta AI and Google DeepMind, including Dario Amodei and others with deep expertise in LLMs. Their mission is to create efficient, high-performing, and open-source models to rival proprietary giants like OpenAI’s GPT series. Mistral models are designed to be lightweight yet powerful, often outperforming larger models in specific tasks, which makes them appealing for hardware like RTX 4060.
+Mistral AI is a French startup founded in 2023 by former researchers from Meta AI and Google DeepMind, including Dario Amodei and others with deep LLM expertise. They aim to create efficient, high-performing, open-source models to rival proprietary giants like OpenAI’s GPT series. Mistral models are designed to be lightweight yet robust, often outperforming larger models in specific tasks, which makes them appealing for laptop computer gpu such as RTX4060 with limited VRAM.
 
 ---
 
-###### b. Model overview
+###### b. Mistral overview
 
 * **Mistral 7B**: A dense 7-billion-parameter model, optimized for general-purpose tasks like text generation, reasoning, and instruction-following (e.g., `mistral:7b-instruct`).
 
@@ -102,8 +101,47 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 
 ### 3. Todo
 - Fix the copy function to make it available in chat history, too. 
-- Remove the mixed language display, which just for fun right now. 
+- <s>Remove the mixed language display, which just for fun right now.</s> 
 - <s>Chat history should only display the recent discussions. </s>
-- Maybe we cna show the r1 reasoning typing aswell, which is useful for better understanding. 
+- Maybe we can show the r1 reasoning typing aswell, which is useful for better understanding. 
+
+
+
+### 4. How to install? 
+- **Requirement**  
+  - **Python**
+  ```shell
+  pip install flask
+  pip install ollama
+  pip install duckduckgo-search
+  ```
+  - **Javascript**
+  ```html
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+  ```
+
+- **Ollama installation**
+  > If you are working on other system, please visit:      
+    https://ollama.com/
+  ```shell
+  # Linux
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+- **Modelfile** 
+  > Use modelfile to pull the model from Ollama more effectively
+  ```shell
+  FROM mistral:7b  # {"deepseek-r:7b": "reasoning"; "mistral:7b": "text generation"; "nomic-embed-text:latest": "cxt-vector embedding"}
+  PARAMETER num_ctx 4096
+  PARAMETER num_thread 24
+  PARAMETER temperature 0.8
+  PARAMETER top_p 0.6
+  PARAMETER top_k 60 
+  ``` 
+
+
+- For more model deployment detail please visit:  
+  https://loveplay1983.github.io/posts/DeepSeek-Local/
+
 
 

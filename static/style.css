@@ -3,6 +3,22 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.chat-container > div:first-child {
+    display: flex;              /* Align image and h1 horizontally */
+    align-items: center;        /* Vertically center them */
+    justify-content: center;    /* Horizontally center the pair */
+    gap: 10px;                  /* Space between image and title */
+    margin-bottom: 20px;        /* Space below the header */
+}
+
+/* Style the image itself */
+.chat-container img {
+    width: 40px;                /* Set a smaller width */
+    height: 40px;               /* Match height to width for square aspect */
+    object-fit: cover;          /* Ensure image fits without distortion */
+    border-radius: 50%;         /* Optional: makes it circular */
+}
+
 .chat-container {
     max-width: 900px;
     margin: 40px auto;

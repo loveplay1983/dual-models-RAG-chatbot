@@ -7,10 +7,13 @@
 </head>
 <body>
     <div class="chat-container">
-        <h1>Xuan's Chatbot</h1>
+        <div>
+            <img src="{{ url_for('static', filename='images/xuan.jpeg') }}" alt="">
+            <h1>Xuan's Chatbot</h1>
+        </div>
         <div class="search-toggle">
             <label>
-                <input type="checkbox" id="search-toggle" checked>🔎Enable Search検索を有効にする
+                <input type="checkbox" id="search-toggle" checked>🔎Search
             </label>
         </div>
         <div class="chat-history" id="chat-box">
@@ -18,15 +21,15 @@
             <div class="message {{ 'user' if msg[0] == 'user' else 'bot' }}" data-raw="{{ msg[1] | e }}">
                 <div class="message-content">{{ msg[1] }}</div>
                 {% if msg[0] == 'bot' %}
-                <button class="copy-btn">㊢Copyコピー</button>
+                <button class="copy-btn">㊢Copy</button>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
         
         <form id="chat-form">
-            <input type="text" name="message" placeholder="输入您的消息輸入您的訊息Type your messageメッセージを入力してくださいGeben Sie Ihre Nachricht ein..." required>
-            <button type="submit">🉑Send送信</button>
+            <input type="text" name="message" placeholder="Input..." required>
+            <button type="submit">🉑Send</button>
         </form>
     </div>
 
