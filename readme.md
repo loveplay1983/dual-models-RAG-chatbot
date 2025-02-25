@@ -100,15 +100,10 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
   - **Relation:** Mixtral is a unique branch, blending dense model ancestry (Mistral 7B) with MoE advancements.
 
 
-### 3. Todo
-- Fix the copy function to make it available in chat history, too. 
-- <s>Remove the mixed language display, which just for fun right now.</s> 
-- <s>Chat history should only display the recent discussions. </s>
-- Maybe we can show the r1 reasoning typing aswell, which is useful for better understanding. 
 
 
 
-### 4. How to install? 
+### 3. How to install? 
 - **Requirement**  
   - **Python**
   ```shell
@@ -139,10 +134,16 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
   PARAMETER top_p 0.6
   PARAMETER top_k 60 
   ``` 
-
-
 - For more model deployment detail please visit:  
   https://loveplay1983.github.io/posts/DeepSeek-Local/
+
+
+
+### 4. Todo
+- Fix the copy function to make it available in chat history, too. 
+- <s>Remove the mixed language display, which just for fun right now.</s> 
+- <s>Chat history should only display the recent discussions. </s>
+- Maybe we can show the r1 reasoning typing aswell, which is useful for better understanding. 
 
 
 
