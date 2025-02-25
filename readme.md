@@ -2,6 +2,7 @@
 
 
 ### 1. Chatbot structure
+![](./simple-chat-bot.png)
 
 ```mermaid
 graph TD
