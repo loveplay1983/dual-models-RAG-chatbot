@@ -143,7 +143,7 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 - Fix the copy function to make it available in chat history, too. 
 - <s>Remove the mixed language display, which just for fun right now.</s> 
 - <s>Chat history should only display the recent discussions. </s>
-- Maybe we can show the r1 reasoning typing aswell, which is useful for better understanding. 
-
-
+- Maybe we can show the r1 reasoning typing aswell, which is useful to understand how do model think. 
+- Add button to visualize the context embedding for more intuitive understanding
+- Examine the search engine results and context embedding acquisition to find possible ways to improve generated outcomes.
 
