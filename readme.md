@@ -99,10 +99,6 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 
   - **Relation:** Mixtral is a unique branch, blending dense model ancestry (Mistral 7B) with MoE advancements.
 
-
-
-
-
 ### 3. How to install? 
 - **Requirement**  
   - **Python**
@@ -134,9 +130,17 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
   PARAMETER top_p 0.6
   PARAMETER top_k 60 
   ``` 
+- **Create model via modelfile**
+  - Models that are used in this project
+    - Deepseek-r1:8b
+    - mistral:7b  
+    - nomic-embed-text
+  - Suggested models
+    - Deepseek-r1:32b
+    - Deepseek-v2:16b   
+  
 - For more model deployment detail please visit:  
   https://loveplay1983.github.io/posts/DeepSeek-Local/
-
 
 
 ### 4. Todo

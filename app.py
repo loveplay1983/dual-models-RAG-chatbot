@@ -115,7 +115,7 @@ def chat():
         try:
             # Step 1: Reasoning with deepseek-r1:1.5b -> reason:latest 
             r1_response = ollama_client.chat(
-                model='r1',
+                model='reason',
                 messages=[{'role': 'user', 'content': user_input}],
                 stream=False
             )['message']['content']
@@ -136,7 +136,7 @@ def chat():
             # Step 4: Stream final response with mistral:7b
             full_response = []
             for chunk in ollama_client.chat(
-                model='v2',
+                model='mistral:7b',
                 messages=[{'role': 'user', 'content': combined_input}],
                 stream=True
             ):
