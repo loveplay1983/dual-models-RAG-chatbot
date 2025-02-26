@@ -11,21 +11,17 @@ const converter = new showdown.Converter({
     sanitize: true
 });
 
-// Render Markdown for existing messages on page load and scroll to bottom
 document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
-    const messages = chatBox.querySelectorAll('.message.bot');
+    const messages = chatBox.querySelectorAll('.message.reasoning, .message.assistant');
     messages.forEach(message => {
         const rawMarkdown = message.getAttribute('data-raw');
         const contentDiv = message.querySelector('.message-content');
         contentDiv.innerHTML = converter.makeHtml(rawMarkdown);
     });
-    // Scroll to the bottom after rendering history
     chatBox.scrollTop = chatBox.scrollHeight;
 });
 
-
-// Handle copy button clicks
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('copy-btn')) {
         const messageDiv = e.target.closest('.message');
@@ -36,8 +32,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-
-// Handle form submission and streaming response
 document.getElementById('chat-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const input = document.querySelector('input[name="message"]');
@@ -51,17 +45,6 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
     input.value = '';
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    const botMessageDiv = document.createElement('div');
-    botMessageDiv.className = 'message bot';
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'message-content';
-    botMessageDiv.appendChild(contentDiv);
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'copy-btn';
-    copyBtn.textContent = 'Copy';
-    botMessageDiv.appendChild(copyBtn);
-    chatBox.appendChild(botMessageDiv);
-
     try {
         const response = await fetch('/chat', {
             method: 'POST',
@@ -72,7 +55,12 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let partial = '';
-        let fullMarkdown = '';
+        let reasoningDiv = null;
+        let reasoningContentDiv = null;
+        let finalDiv = null;
+        let finalContentDiv = null;
+        let fullReasoningMarkdown = '';
+        let fullFinalMarkdown = '';
 
         while (true) {
             const { done, value } = await reader.read();
@@ -85,21 +73,53 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
             for (const line of lines) {
                 if (line.startsWith('data: ')) {
                     const data = JSON.parse(line.slice(6));
-                    fullMarkdown += data.token;
-                    contentDiv.innerHTML = converter.makeHtml(fullMarkdown);
+                    if (data.type === 'reasoning') {
+                        if (!reasoningDiv) {
+                            reasoningDiv = document.createElement('div');
+                            reasoningDiv.className = 'message reasoning';
+                            reasoningContentDiv = document.createElement('div');
+                            reasoningContentDiv.className = 'message-content';
+                            reasoningDiv.appendChild(reasoningContentDiv);
+                            chatBox.appendChild(reasoningDiv);
+                        }
+                        fullReasoningMarkdown += data.token;
+                        reasoningContentDiv.innerHTML = converter.makeHtml(fullReasoningMarkdown);
+                        reasoningDiv.setAttribute('data-raw', fullReasoningMarkdown);
+                    } else if (data.type === 'final') {
+                        if (!finalDiv) {
+                            finalDiv = document.createElement('div');
+                            finalDiv.className = 'message assistant';
+                            finalContentDiv = document.createElement('div');
+                            finalContentDiv.className = 'message-content';
+                            finalDiv.appendChild(finalContentDiv);
+                            const copyBtn = document.createElement('button');
+                            copyBtn.className = 'copy-btn';
+                            copyBtn.textContent = 'Copy';
+                            finalDiv.appendChild(copyBtn);
+                            chatBox.appendChild(finalDiv);
+                        }
+                        fullFinalMarkdown += data.token;
+                        finalContentDiv.innerHTML = converter.makeHtml(fullFinalMarkdown);
+                        finalDiv.setAttribute('data-raw', fullFinalMarkdown);
+                    } else if (data.type === 'error') {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'message error';
+                        errorDiv.textContent = data.content;
+                        chatBox.appendChild(errorDiv);
+                    }
                     chatBox.scrollTop = chatBox.scrollHeight;
                 }
             }
         }
-        botMessageDiv.setAttribute('data-raw', fullMarkdown); // Set raw Markdown after streaming
     } catch (error) {
         console.error('Chat errorチャットエラー:', error);
-        botMessageDiv.className = 'message error';
-        contentDiv.textContent = `Errorエラー: ${error.message}`;
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'message error';
+        errorDiv.textContent = `Errorエラー: ${error.message}`;
+        chatBox.appendChild(errorDiv);
     }
 });
 
-// Enter key binding
 document.querySelector('input[name="message"]').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();

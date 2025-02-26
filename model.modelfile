@@ -1,0 +1,7 @@
+FROM phi:2.7b-chat-v2-q8_0
+PARAMETER num_ctx 163840
+PARAMETER num_thread 24
+PARAMETER temperature 0.8
+PARAMETER top_p 0.6
+PARAMETER top_k 60 
+PARAMETER num_predict -2

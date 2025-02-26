@@ -123,24 +123,35 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 - **Modelfile** 
   > Use modelfile to pull the model from Ollama more effectively
   ```shell
-  FROM mistral:7b  # {"deepseek-r:7b": "reasoning"; "mistral:7b": "text generation"; "nomic-embed-text:latest": "cxt-vector embedding"}
+  FROM model-name
   PARAMETER num_ctx 4096
   PARAMETER num_thread 24
   PARAMETER temperature 0.8
   PARAMETER top_p 0.6
   PARAMETER top_k 60 
+  PARAMETER num_prdict -2 # Generate text based on the context
   ``` 
 - **Create model via modelfile**
   - Models that are used in this project
     - Deepseek-r1:8b
     - mistral:7b  
-    - nomic-embed-text
+    - nomic-embed-text:latest
   - Suggested models
     - Deepseek-r1:32b
     - Deepseek-v2:16b   
   
-- For more model deployment detail please visit:  
+- **For more model deployment detail please visit:**  
   https://loveplay1983.github.io/posts/DeepSeek-Local/
+
+- **Recommended Models for Less Powerful Computer**   
+
+  | Model          | Parameters | Disk Size (4-bit) | Runtime RAM (Estimate) | Strengths                   |
+  | -------------- | ---------- | ----------------- | ---------------------- | --------------------------- |
+  | Phi-2          | 2.7B       | 1.6 GB            | 3-4 GiB                | Reasoning, efficiency       |
+  | Gemma 2B       | 2B         | 1.4 GB            | 2.5-3.5 GiB            | Conversational quality      |
+  | Qwen 1.5 4B    | 4B         | 2.3 GB            | 4-6 GiB                | Multilingual, strong output |
+  | TinyLlama 1.1B | 1.1B       | 650 MB            | 1.5-2 GiB              | Ultra-light, fast           |
+  | Stable LM 3B   | 3B         | 1.8 GB            | 3.5-5 GiB              | Dialogue, coherence         |
 
 
 ### 4. Todo
@@ -148,7 +159,7 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 - <s>Remove the mixed language display, which just for fun right now.</s> 
 - <s>Chat history should only display the recent discussions. </s>
 - <s>Inprovement the instruction based on "reason + context + input"</s>
-- Maybe we can show the r1 reasoning typing aswell, which is useful to understand how do model think. 
+- <s>Maybe we can show the r1 reasoning typing aswell, which is useful to understand how does the model think.</s>
 - Add button to visualize the context embedding for more intuitive understanding
 - Examine the search engine results and context embedding acquisition to find possible ways to improve generated outcomes.
 

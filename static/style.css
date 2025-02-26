@@ -4,19 +4,18 @@ body {
 }
 
 .chat-container > div:first-child {
-    display: flex;              /* Align image and h1 horizontally */
-    align-items: center;        /* Vertically center them */
-    justify-content: center;    /* Horizontally center the pair */
-    gap: 10px;                  /* Space between image and title */
-    margin-bottom: 20px;        /* Space below the header */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-/* Style the image itself */
 .chat-container img {
-    width: 40px;                /* Set a smaller width */
-    height: 40px;               /* Match height to width for square aspect */
-    object-fit: cover;          /* Ensure image fits without distortion */
-    border-radius: 50%;         /* Optional: makes it circular */
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .chat-container {
@@ -59,7 +58,14 @@ h1 {
     margin-left: auto;
 }
 
-.message.bot {
+.message.reasoning {
+    background: #f0f0f0;
+    color: #555;
+    font-style: italic;
+    margin-right: auto;
+}
+
+.message.assistant {
     background: #e9ecef;
     color: black;
     margin-right: auto;
@@ -97,102 +103,6 @@ button:hover {
     background: #218838;
 }
 
-
-.message.bot {
-    position: relative;
-    min-height: 20px;
-}
-
-.loading-cursor::after {
-    content: '▋';
-    animation: blink 1s step-end infinite;
-    color: #666;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* Adding the following for markdown styling */
-.message.bot h1, .message.bot h2, .message.bot h3 {
-    margin: 1em 0 0.5em;
-    font-weight: bold;
-}
-
-.message.bot h1 { font-size: 1.6em; }
-.message.bot h2 { font-size: 1.4em; }
-.message.bot h3 { font-size: 1.2em; }
-
-.message.bot ul, .message.bot ol {
-    padding-left: 2em;
-    margin: 0.5em 0;
-}
-
-.message.bot li {
-    margin: 0.25em 0;
-}
-
-.message.bot code {
-    background: #f4f4f4;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
-    font-family: Monaco, Consolas, "Courier New", monospace;
-}
-
-.message.bot pre {
-    background: #f8f8f8;
-    padding: 1em;
-    border-radius: 5px;
-    overflow-x: auto;
-    margin: 1em 0;
-}
-
-.message.bot pre code {
-    background: none;
-    padding: 0;
-    font-size: 0.9em;
-}
-
-.message.bot blockquote {
-    border-left: 4px solid #ddd;
-    margin: 1em 0;
-    padding-left: 1em;
-    color: #666;
-}
-
-.message.bot table {
-    border-collapse: collapse;
-    margin: 1em 0;
-}
-
-.message.bot th, .message.bot td {
-    border: 1px solid #ddd;
-    padding: 0.5em 1em;
-}
-
-.message.bot th {
-    background-color: #f8f8f8;
-}
-
-
-.message.bot h1,
-.message.bot h2,
-.message.bot h3,
-.message.bot p,
-.message.bot ul,
-.message.bot ol,
-.message.bot pre {
-    background: inherit !important;
-}
-
-/* Fix code block alignment */
-.message.bot pre {
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-
 .copy-btn {
     position: absolute;
     top: 5px;
@@ -206,10 +116,9 @@ button:hover {
     transition: opacity 0.3s;
 }
 
-.message.bot:hover .copy-btn {
+.message.assistant:hover .copy-btn {
     opacity: 1;
 }
-
 
 .search-toggle {
     margin-bottom: 15px;
@@ -219,4 +128,69 @@ button:hover {
 .search-toggle label {
     color: #555;
     font-size: 16px;
+}
+
+/* Markdown styling for reasoning and assistant messages */
+.message.reasoning h1, .message.assistant h1,
+.message.reasoning h2, .message.assistant h2,
+.message.reasoning h3, .message.assistant h3 {
+    margin: 1em 0 0.5em;
+    font-weight: bold;
+}
+
+.message.reasoning h1, .message.assistant h1 { font-size: 1.6em; }
+.message.reasoning h2, .message.assistant h2 { font-size: 1.4em; }
+.message.reasoning h3, .message.assistant h3 { font-size: 1.2em; }
+
+.message.reasoning ul, .message.assistant ul,
+.message.reasoning ol, .message.assistant ol {
+    padding-left: 2em;
+    margin: 0.5em 0;
+}
+
+.message.reasoning li, .message.assistant li {
+    margin: 0.25em 0;
+}
+
+.message.reasoning code, .message.assistant code {
+    background: #f4f4f4;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: Monaco, Consolas, "Courier New", monospace;
+}
+
+.message.reasoning pre, .message.assistant pre {
+    background: #f8f8f8;
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.message.reasoning pre code, .message.assistant pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.message.reasoning blockquote, .message.assistant blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1em 0;
+    padding-left: 1em;
+    color: #666;
+}
+
+.message.reasoning table, .message.assistant table {
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.message.reasoning th, .message.assistant th,
+.message.reasoning td, .message.assistant td {
+    border: 1px solid #ddd;
+    padding: 0.5em 1em;
+}
+
+.message.reasoning th, .message.assistant th {
+    background-color: #f8f8f8;
 }

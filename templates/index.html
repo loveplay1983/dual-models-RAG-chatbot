@@ -18,9 +18,9 @@
         </div>
         <div class="chat-history" id="chat-box">
             {% for msg in history %}
-            <div class="message {{ 'user' if msg[0] == 'user' else 'bot' }}" data-raw="{{ msg[1] | e }}">
+            <div class="message {{ msg[0] }}" data-raw="{{ msg[1] | e }}">
                 <div class="message-content">{{ msg[1] }}</div>
-                {% if msg[0] == 'bot' %}
+                {% if msg[0] == 'assistant' %}
                 <button class="copy-btn">㊢Copy</button>
                 {% endif %}
             </div>

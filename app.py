@@ -8,8 +8,7 @@ from duckduckgo_search import DDGS
 app = Flask(__name__)
 
 # Initialize Ollama client with custom port
-ollama_client = Client(host='http://localhost:11450')  # Add this line
-
+ollama_client = Client(host='http://localhost:11450')
 
 # ----------------------------
 # search and vector embedding
@@ -46,11 +45,7 @@ def get_most_relevant_context(query, search_results):
         return search_results[max_index]
     return None
 
-
-
-# --------------------------
 # Database Configuration
-# --------------------------
 def get_db():
     """Get or create SQLite database connection."""
     if 'db' not in g:
@@ -69,17 +64,11 @@ def close_db(error=None):
     if db is not None:
         db.close()
 
-# --------------------------
-# Chat Routes
-# --------------------------
 def save_message(role, content):
     """Save message to database."""
     with app.app_context():
         db = get_db()
-        db.execute(
-            'INSERT INTO messages (role, content) VALUES (?, ?)',
-            (role, content)
-        )
+        db.execute('INSERT INTO messages (role, content) VALUES (?, ?)', (role, content))
         db.commit()
 
 @app.route('/')
@@ -113,12 +102,17 @@ def chat():
     # Stream bot response
     def generate():
         try:
-            # Step 1: Reasoning with deepseek-r1:1.5b -> reason:latest 
-            r1_response = ollama_client.chat(
+            # Step 1: Stream reasoning output
+            full_reasoning = []
+            for chunk in ollama_client.chat(
                 model='reason',
                 messages=[{'role': 'user', 'content': user_input}],
-                stream=False
-            )['message']['content']
+                stream=True  # Enable streaming
+            ):
+                content = chunk['message']['content']
+                full_reasoning.append(content)
+                yield f"data: {json.dumps({'type': 'reasoning', 'token': content})}\n\n"
+            save_message('reasoning', ''.join(full_reasoning))
             
             # Step 2: Get context if search is enabled
             context = None
@@ -127,13 +121,14 @@ def chat():
                 if search_results:
                     context = get_most_relevant_context(user_input, search_results)
             
-            # Step 3: Combine r1_response and context for text generation model -> mistral:7b
+            # Step 3: Combine for final input
+            r1_response = ''.join(full_reasoning)
             if context:
                 combined_input = f"Based on: {r1_response} and context: {context}. {user_input}. Thank you."
             else:
                 combined_input = f"Based on: {r1_response}. {user_input}. Thank you."
             
-            # Step 4: Stream final response with mistral:7b
+            # Step 4: Stream final response with 'generate' model
             full_response = []
             for chunk in ollama_client.chat(
                 model='mistral:7b',
@@ -142,18 +137,16 @@ def chat():
             ):
                 content = chunk['message']['content']
                 full_response.append(content)
-                yield f"data: {json.dumps({'token': content})}\n\n"
+                yield f"data: {json.dumps({'type': 'final', 'token': content})}\n\n"
             
+            # Save final message with role 'assistant'
             save_message('assistant', ''.join(full_response))
         except Exception as e:
             error_message = f"Error: {str(e)}"
-            yield f"data: {json.dumps({'token': error_message})}\n\n"
+            yield f"data: {json.dumps({'type': 'error', 'content': error_message})}\n\n"
             save_message('assistant', error_message)
     
     return Response(generate(), mimetype='text/event-stream')
-    
-
-
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)  
