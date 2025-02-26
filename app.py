@@ -30,6 +30,7 @@ def cosine_similarity(vec1, vec2):
     dot_product = sum(a * b for a, b in zip(vec1, vec2))
     norm1 = sum(a ** 2 for a in vec1) ** 0.5
     norm2 = sum(b ** 2 for b in vec2) ** 0.5
+    # if both norm1 and norm2 are non-zero, else return 0
     return dot_product / (norm1 * norm2) if norm1 and norm2 else 0
 
 def get_most_relevant_context(query, search_results):
@@ -114,7 +115,7 @@ def chat():
         try:
             # Step 1: Reasoning with deepseek-r1:1.5b -> reason:latest 
             r1_response = ollama_client.chat(
-                model='reason',
+                model='r1',
                 messages=[{'role': 'user', 'content': user_input}],
                 stream=False
             )['message']['content']
@@ -128,14 +129,14 @@ def chat():
             
             # Step 3: Combine r1_response and context for text generation model -> mistral:7b
             if context:
-                combined_input = f"Based on the reasoning: {r1_response} and the context: {context}, please provide a response."
+                combined_input = f"Based on: {r1_response} and context: {context}. {user_input}. Thank you."
             else:
-                combined_input = f"Based on the reasoning: {r1_response}, please provide a response."
+                combined_input = f"Based on: {r1_response}. {user_input}. Thank you."
             
             # Step 4: Stream final response with mistral:7b
             full_response = []
             for chunk in ollama_client.chat(
-                model='mistral:7b',
+                model='v2',
                 messages=[{'role': 'user', 'content': combined_input}],
                 stream=True
             ):
