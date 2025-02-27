@@ -163,3 +163,6 @@ Both are available in quantized forms (e.g., Q4_0) via Ollama.
 - Add button to visualize the context embedding for more intuitive understanding
 - Examine the search engine results and context embedding acquisition to find possible ways to improve generated outcomes.
 
+
+### 5. Ollama models port  
+https://loveplay1983.github.io/posts/ollama-models-report/
